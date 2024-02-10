@@ -41,7 +41,7 @@ export const createContact = async (req, res, next) => {
     const contact = await contactsService.addContact(req.body);
     res.status(201).json(contact);
   } catch (error) {
-    next(HttpError(400));
+    next(HttpError(400, error.message));
   }
 };
 
@@ -54,9 +54,9 @@ export const updateContact = async (req, res, next) => {
     if (contact) {
       res.status(200).json(contact);
     } else {
-      next(HttpError(404));
+      next(HttpError(404, "Contact not found"));
     }
   } catch (error) {
-    next(HttpError(400));
+    next(HttpError(400, error.message));
   }
 };
