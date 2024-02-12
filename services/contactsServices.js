@@ -67,11 +67,9 @@ async function updateContact(id, updatedContact) {
     if (index === -1) {
       return null;
     }
-    const contact = contacts[index];
-    const updated = { ...contact, ...updatedContact };
-    contacts[index] = updated;
+    contacts[index] = { ...contacts[index], ...updatedContact };
     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-    return updated;
+    return contacts[index];
   } catch (error) {
     console.error("Error updating contact:", error);
   }
