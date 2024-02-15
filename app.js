@@ -1,10 +1,23 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-
+import mongoose from "mongoose";
 import contactsRouter from "./routes/contactsRouter.js";
 
 const app = express();
+
+// Connection URL
+const url =
+  "mongodb+srv://dimas1083:Haslo_1982@albion.ohd8gbb.mongodb.net/db-contacts?retryWrites=true&w=majority";
+
+// Connect to the database
+mongoose
+  .connect(url)
+  .then(() => console.log("Database connection successful"))
+  .catch((error) => {
+    console.error(`Database connection error: ${error.message}`);
+    process.exit(1);
+  });
 
 app.use(morgan("tiny"));
 app.use(cors());
