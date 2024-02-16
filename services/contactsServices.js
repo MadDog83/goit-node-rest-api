@@ -41,6 +41,7 @@ async function addContact(name, email, phone) {
   }
 }
 
+// Function to update a contact by ID
 async function updateContact(id, updatedContact) {
   try {
     const contact = await Contact.findByIdAndUpdate(id, updatedContact, {
@@ -52,6 +53,7 @@ async function updateContact(id, updatedContact) {
   }
 }
 
+// Function to update the 'favorite' status of a contact by ID
 async function updateStatusContact(id, favorite) {
   try {
     const contact = await Contact.findByIdAndUpdate(
