@@ -52,9 +52,13 @@ async function updateContact(id, updatedContact) {
   }
 }
 
-async function updateStatusContact(id, body) {
+async function updateStatusContact(id, favorite) {
   try {
-    const contact = await Contact.findByIdAndUpdate(id, body, { new: true });
+    const contact = await Contact.findByIdAndUpdate(
+      id,
+      { favorite },
+      { new: true }
+    );
     return contact;
   } catch (error) {
     console.error("Error updating contact status:", error);
