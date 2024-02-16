@@ -11,7 +11,6 @@ const app = express();
 
 const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/db-contacts?retryWrites=true&w=majority`;
 
-// Connect to the database
 mongoose
   .connect(url)
   .then(() => console.log("Database connection successful"))
