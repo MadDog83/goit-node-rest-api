@@ -3,12 +3,14 @@ import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
 import contactsRouter from "./routes/contactsRouter.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
 // Connection URL
-const url =
-  "mongodb+srv://dimas1083:Haslo_1982@albion.ohd8gbb.mongodb.net/db-contacts?retryWrites=true&w=majority";
+const url = `mongodb+srv://dimas1083:${process.env.DB_PASSWORD}@albion.ohd8gbb.mongodb.net/db-contacts?retryWrites=true&w=majority`;
 
 // Connect to the database
 mongoose
