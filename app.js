@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 // Connection URL
-const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@albion.ohd8gbb.mongodb.net/db-contacts?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/db-contacts?retryWrites=true&w=majority`;
 
 // Connect to the database
 mongoose
