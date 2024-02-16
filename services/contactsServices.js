@@ -52,13 +52,9 @@ async function updateContact(id, updatedContact) {
   }
 }
 
-async function updateStatusContact(id, favorite) {
+async function updateStatusContact(id, body) {
   try {
-    const contact = await Contact.findByIdAndUpdate(
-      id,
-      { favorite },
-      { new: true }
-    );
+    const contact = await Contact.findByIdAndUpdate(id, body, { new: true });
     return contact;
   } catch (error) {
     console.error("Error updating contact status:", error);
@@ -71,7 +67,7 @@ const contactsService = {
   removeContact,
   addContact,
   updateContact,
-  updateStatusContact,
+  updateStatusContact, // add the new function to the exported object
 };
 
 export default contactsService;
