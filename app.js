@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
 import contactsRouter from "./routes/contactsRouter.js";
+import usersRouter from "./routes/usersRouter.js"; // Import the users router
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/contacts", contactsRouter);
+app.use("/users", usersRouter); // Use the users router
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
