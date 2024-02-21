@@ -6,7 +6,7 @@ const authMiddleware = async (req, res, next) => {
   const token = authorizationHeader.replace("Bearer ", "");
 
   try {
-    const userId = jwt.verify(token, "your_jwt_secret").userId;
+    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
     const user = await User.findById(userId);
 
     if (!user || token !== user.token) {
