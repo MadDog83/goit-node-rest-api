@@ -1,9 +1,15 @@
 import Contact from "../db/contact.js";
 
 // Function to list all contacts
-async function listContacts() {
+async function listContacts({ page = 1, limit = 20, favorite } = {}) {
+  const skip = (page - 1) * limit;
+
+  const filter = favorite ? { favorite: favorite === "true" } : {};
+
   try {
-    const contacts = await Contact.find();
+    const contacts = await Contact.find(filter)
+      .skip(skip)
+      .limit(parseInt(limit));
     return contacts;
   } catch (error) {
     console.error("Error reading contacts:", error);
