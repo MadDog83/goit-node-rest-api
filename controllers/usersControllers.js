@@ -8,7 +8,7 @@ export const register = async (req, res, next) => {
     const user = await usersService.registerUser(email, password);
     res.status(201).json({ user });
   } catch (error) {
-    next(new HttpError(409, error.message));
+    next(HttpError(409, error.message));
   }
 };
 
@@ -19,7 +19,7 @@ export const login = async (req, res, next) => {
     const result = await usersService.loginUser(email, password);
     res.status(200).json(result);
   } catch (error) {
-    next(new HttpError(401, error.message));
+    next(HttpError(401, error.message));
   }
 };
 
@@ -28,7 +28,7 @@ export const logout = async (req, res, next) => {
     await usersService.logoutUser(req.user._id);
     res.status(204).end();
   } catch (error) {
-    next(new HttpError(401, "Not authorized"));
+    next(HttpError(401, "Not authorized"));
   }
 };
 
@@ -37,7 +37,7 @@ export const getCurrentUser = async (req, res, next) => {
     const user = await usersService.getCurrentUser(req.user._id);
     res.status(200).json(user);
   } catch (error) {
-    next(new HttpError(401, "Not authorized"));
+    next(HttpError(401, "Not authorized"));
   }
 };
 
@@ -51,6 +51,6 @@ export const updateSubscription = async (req, res, next) => {
     );
     res.status(200).json(user);
   } catch (error) {
-    next(new HttpError(500, error.message));
+    next(HttpError(500, error.message));
   }
 };
