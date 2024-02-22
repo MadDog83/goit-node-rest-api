@@ -1,11 +1,12 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../db/user.js";
+import HttpError from "../helpers/HttpError.js";
 
 export const registerUser = async (email, password) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new Error("Email in use");
+    throw HttpError(409, "Email in use");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -18,12 +19,12 @@ export const registerUser = async (email, password) => {
 export const loginUser = async (email, password) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error("Email or password is wrong");
+    throw HttpError(401, "Email or password is wrong");
   }
 
   const isPasswordMatch = await bcrypt.compare(password, user.password);
   if (!isPasswordMatch) {
-    throw new Error("Email or password is wrong");
+    throw HttpError(401, "Email or password is wrong");
   }
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
@@ -45,7 +46,7 @@ export const logoutUser = async (userId) => {
 export const getCurrentUser = async (userId) => {
   const user = await User.findById(userId);
   if (!user) {
-    throw new Error("Not authorized");
+    throw HttpError(401, "Not authorized");
   }
   return {
     email: user.email,
@@ -59,6 +60,9 @@ export const updateSubscription = async (userId, subscription) => {
     { subscription },
     { new: true }
   );
+  if (!user) {
+    throw HttpError(404, "User not found");
+  }
   return {
     email: user.email,
     subscription: user.subscription,
