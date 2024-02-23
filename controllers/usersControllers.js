@@ -1,7 +1,9 @@
 import * as usersService from "../services/usersServices.js";
 import HttpError from "../helpers/HttpError.js";
+import validateBody from "../helpers/validateBody.js";
+import { userSchema, subscriptionSchema } from "../schemas/usersSchemas.js";
 
-export const register = async (req, res, next) => {
+export const register = validateBody(userSchema)(async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
@@ -10,9 +12,9 @@ export const register = async (req, res, next) => {
   } catch (error) {
     next(HttpError(409, error.message));
   }
-};
+});
 
-export const login = async (req, res, next) => {
+export const login = validateBody(userSchema)(async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
@@ -21,7 +23,7 @@ export const login = async (req, res, next) => {
   } catch (error) {
     next(HttpError(401, error.message));
   }
-};
+});
 
 export const logout = async (req, res, next) => {
   try {
@@ -41,7 +43,7 @@ export const getCurrentUser = async (req, res, next) => {
   }
 };
 
-export const updateSubscription = async (req, res, next) => {
+export const updateSubscription = validateBody(subscriptionSchema)(async (req, res, next) => {
   const { subscription } = req.body;
 
   try {
@@ -53,4 +55,4 @@ export const updateSubscription = async (req, res, next) => {
   } catch (error) {
     next(HttpError(500, error.message));
   }
-};
+});
